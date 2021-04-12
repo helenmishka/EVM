@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Task 5</title>
+</head>
+<body>
+
+<h1>Task5</h1>
+
+<p>Введите почту</p>
+<input name="email" spellcheck="false" autocomplete="off">
+<br>
+<br>
+<p>Введите фамилию</p>
+<input name="firstname" spellcheck="false" autocomplete="off">
+<br>
+<br>
+<p>Введите номер телефона</p>
+<input name="phone" spellcheck="false" autocomplete="off">
+<br>
+<br>
+<button onclick="makeAction()">Отправить запрос</button>
+
+<script>
+    "use strict";
+
+    function ajaxPost(urlString, bodyString, callback) {
+        let r = new XMLHttpRequest();
+        r.open("POST", urlString, true);
+        r.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        r.send(bodyString);
+        r.onload = function() {
+            callback(r.response);
+        }
+    }
+
+    function makeAction() {
+        const inputMessage = "Введите 3 числа через пробел";
+        const inputDefault = "0 0 0";
+        const input = prompt(inputMessage, inputDefault);
+
+        if(!input) return;
+        if(!input.trim()) return;
+
+        const arr = input.trim().split(" ");
+        const a = arr[0];
+        const b = arr[1];
+        const c = arr[2];
+
+        ajaxPost("/save/info", JSON.stringify({
+            a, b, c
+        }), function(answerString) {
+            const answerObject = JSON.parse(answerString);
+            const result = answerObject.result;
+            alert(result);
+        });
+    }
+</script>
+    
+</body>
+</html>

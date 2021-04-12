@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TASK 7</title>
+    
+</head>
+<body>
+    <h1>TASK 7</h1>
+    <hr width="20%" color="black" align="left" size="5">
+    <p>Название машины</p>
+    <input id="field-first" type="text" spellcheck="false" autocomplete="off">
+    <p>Цена машины</p>
+    <input id="field-second" type="text" spellcheck="false" autocomplete="off">
+    <br><br>
+    <button onclick="NewCar()">Добавить машину</button>
+
+    <hr width="20%" color="black" align="left" size="5">
+
+
+    <p>Название машины</p>
+    <input id="field-third" type="text" spellcheck="false" autocomplete="off">
+    <button onclick="FindCost()">Узнать цену</button>
+
+    <hr width="20%" color="black" align="left" size="5">
+
+    <p>Название склада</p>
+    <input id="field-fourth" type="text" spellcheck="false" autocomplete="off">
+    <p>Содержимое склада</p>
+    <input id="field-fifth" type="text" spellcheck="false" autocomplete="off">
+    <br><br>
+    <button onclick="NewHouseStore()">Создать склад</button>
+
+    <hr width="20%" color="black" align="left" size="5">
+    
+    <p>Содержимое склада</p>
+    <input id="field-sixth" type="text" spellcheck="false" autocomplete="off">
+    <button onclick="DataHouseStore()">Показать содержимое</button>
+
+    <hr width="20%" color="black" align="left" size="5">
+
+    <script>
+    "use strict";
+
+
+    function ajaxGet(urlString, callback) {
+        let obj = new XMLHttpRequest()
+        obj.open("GET", urlString, true)
+        obj.send(null)
+        obj.onload = function() {
+            callback(obj.response);
+        }
+    }
+
+    function NewCar() {
+        const a = document.getElementById("field-first");
+        const strA = a.value
+        const b = document.getElementById("field-second");
+        const strB = b.value
+        const url = "/new/car?n=" + strA + "&p=" + strB
+
+        ajaxGet(url, function(stringAnswer) {
+            const JSONresult = stringAnswer;
+            const OBJECTresult = JSON.parse(JSONresult);
+            const result = OBJECTresult.result
+            alert(result)
+        })
+    }
+
+    function FindCost() {
+        const a = document.getElementById("field-third");
+        const strA = a.value
+        const url = "/find/cost?n=" + strA
+
+        ajaxGet(url, function(stringAnswer) {
+            const JSONresult = stringAnswer;
+            const OBJECTresult = JSON.parse(JSONresult);
+            const result = OBJECTresult.result
+            alert(result)
+        })
+    }
+
+    function NewHouseStore() {
+        const a = document.getElementById("field-fourth");
+        const strA = a.value
+        const b = document.getElementById("field-fifth");
+        const strB = b.value
+        const url = "/new/housestore?s=" + strA + "&c=" + strB
+
+        ajaxGet(url, function(stringAnswer) {
+            const JSONresult = stringAnswer;
+            const OBJECTresult = JSON.parse(JSONresult);
+            const result = OBJECTresult.result
+            alert(result)
+        })
+    }
+
+    function DataHouseStore() {
+        const a = document.getElementById("field-sixth");
+        const strA = a.value
+        const url = "/data/housestore?s=" + strA
+
+        ajaxGet(url, function(stringAnswer) {
+            const JSONresult = stringAnswer;
+            const OBJECTresult = JSON.parse(JSONresult);
+            const result = OBJECTresult.result
+            alert(result)
+        })
+    }
+
+    </script>
+</body>
+</html>
